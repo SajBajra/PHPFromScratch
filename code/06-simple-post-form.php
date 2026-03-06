@@ -1,7 +1,13 @@
 <?php
 
-// If the form was submitted, read the "name" from the POST body.
 $name = $_POST['name'] ?? '';
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (trim($name) === '') {
+        $error = 'Name is required.';
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -12,6 +18,10 @@ $name = $_POST['name'] ?? '';
 </head>
 <body>
     <h1>Simple POST Form</h1>
+
+    <?php if ($error !== ''): ?>
+        <p style="color: red;"><?php echo htmlspecialchars($error, ENT_QUOTES); ?></p>
+    <?php endif; ?>
 
     <form method="post" action="">
         <label>
