@@ -35,8 +35,9 @@ php -S localhost:8000 -t code
 - [x] Basics: variables and types
 - [x] Conditionals and loops
 - [x] Arrays and functions
-- [ ] Working with forms (GET/POST)
-- [ ] Sessions and cookies
+- [x] Working with forms (GET/POST)
+- [x] Sessions and cookies
+- [x] Simple file I/O and guestbook
 - [ ] PDO + MySQL
 - [ ] Mini CRUD project
 
