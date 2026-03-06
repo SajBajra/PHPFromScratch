@@ -1,0 +1,6 @@
+PHP Basics (syntax, variables, types)
+
+Today I started learning the very basics of PHP. PHP files normally start with the opening tag `<?php`, and most lines end with a semicolon `;`. Variables always begin with a dollar sign, like `$name` or `$age`. The main simple types I used are integers, floats, strings, and booleans. To print something to the terminal I use `echo`, and I can add a new line in CLI scripts with `PHP_EOL`.
+
+For variables, a simple example is `$age = 20;`. I can then print it using `echo "Age: $age";`. In the same way, I can print strings and numbers together by writing `echo "Hello, $name";` and PHP will replace `$name` with its value.
+

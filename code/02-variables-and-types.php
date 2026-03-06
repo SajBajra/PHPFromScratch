@@ -1,7 +1,7 @@
 <?php
 
 // Scalars
-$age = 25;
+$age = 21;
 $height = 1.80;
 $name = "Saj";
 $isProgrammer = true;
