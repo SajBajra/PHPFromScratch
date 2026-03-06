@@ -1,0 +1,4 @@
+Today I started learning how PHP works together with HTML forms using the GET method. I created a simple page that shows a text box for my name and a submit button. The form uses `method="get"` and when I submit it, the browser sends the value in the query string, which PHP reads from the `$_GET` superglobal array.
+
+In my example, I read the name like this: `$name = $_GET['name'] ?? '';`. If the name is not set yet, I use an empty string as a default. When the name is present, I show a message such as `Hello, Saj!` on the page. I also used `htmlspecialchars` when I print the name, so that any special characters are safely escaped before they are rendered in the HTML.
+

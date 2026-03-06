@@ -18,6 +18,8 @@ php code/01-hello-world.php
 php code/02-variables-and-types.php
 php code/03-conditionals-and-loops.php
 php code/04-arrays-and-functions.php
+php -S localhost:8000 -t code
+# then open http://localhost:8000/05-simple-get-form.php in your browser
 ```
 
 ## Structure
@@ -30,9 +32,9 @@ php code/04-arrays-and-functions.php
 
 - [x] Environment set up
 - [x] Hello World
-- [ ] Basics: variables and types
-- [ ] Conditionals and loops
-- [ ] Arrays and functions
+- [x] Basics: variables and types
+- [x] Conditionals and loops
+- [x] Arrays and functions
 - [ ] Working with forms (GET/POST)
 - [ ] Sessions and cookies
 - [ ] PDO + MySQL
