@@ -52,6 +52,7 @@ php -S localhost:8000 -t code
 - [x] Simple blog (list, view, add post)
 - [x] Pagination (blog list)
 - [x] Auth with database (register, login, logout)
+- [x] Basic OOP: Database helper class
 
 ## Commit conventions
 
