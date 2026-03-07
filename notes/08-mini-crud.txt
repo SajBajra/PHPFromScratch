@@ -1,3 +1,5 @@
 Mini CRUD project
 
 I built a small CRUD (Create, Read, Update, Delete) for the items table. 18-crud-list.php shows all rows and has a form that POSTs to 18-crud-add.php to insert a new item, then redirects back to the list. The list page also has Edit and Delete links for each row. 18-crud-edit.php takes the id in the URL, loads the row, and shows a form; on POST it runs an UPDATE and redirects to the list. 18-crud-delete.php takes id in the URL, runs DELETE, then redirects to the list. I used prepared statements for all INSERT, UPDATE, and DELETE to avoid SQL injection. This tied together forms, redirects, and PDO in a single small project.
+
+Later I polished the CRUD: I added session flash messages so that after add, edit, or delete the list page shows a one-time message (e.g. "Item added."). I added validation (name required, max 255 characters) and show errors on the list (for add) and on the edit form. I also added a delete confirmation page (18-crud-delete-confirm.php) that shows the item name and asks "Are you sure?"; the actual delete is done via POST to 18-crud-delete.php, which then sets a flash and redirects.

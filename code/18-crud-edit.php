@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $config = require __DIR__ . '/db-config.php';
 
 try {
@@ -25,10 +27,19 @@ if ($id < 1) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
-    if ($name !== '') {
-        $stmt = $pdo->prepare("UPDATE items SET name = :name WHERE id = :id");
-        $stmt->execute(['name' => $name, 'id' => $id]);
+    if ($name === '') {
+        $_SESSION['crud_error'] = 'Name is required.';
+        header('Location: 18-crud-edit.php?id=' . $id);
+        exit;
     }
+    if (strlen($name) > 255) {
+        $_SESSION['crud_error'] = 'Name must be at most 255 characters.';
+        header('Location: 18-crud-edit.php?id=' . $id);
+        exit;
+    }
+    $stmt = $pdo->prepare("UPDATE items SET name = :name WHERE id = :id");
+    $stmt->execute(['name' => $name, 'id' => $id]);
+    $_SESSION['crud_flash'] = 'Item updated.';
     header('Location: 18-crud-list.php');
     exit;
 }
@@ -42,6 +53,9 @@ if (!$item) {
     exit;
 }
 
+$error = $_SESSION['crud_error'] ?? '';
+unset($_SESSION['crud_error']);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,10 +65,13 @@ if (!$item) {
 </head>
 <body>
     <h1>Edit item</h1>
+    <?php if ($error !== ''): ?>
+        <p style="color: red;"><?php echo htmlspecialchars($error, ENT_QUOTES); ?></p>
+    <?php endif; ?>
     <form method="post" action="">
         <label>
             Name:
-            <input type="text" name="name" value="<?php echo htmlspecialchars($item['name'], ENT_QUOTES); ?>" required>
+            <input type="text" name="name" value="<?php echo htmlspecialchars($item['name'], ENT_QUOTES); ?>" maxlength="255" required>
         </label>
         <button type="submit">Save</button>
     </form>

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $config = require __DIR__ . '/db-config.php';
 
 try {
@@ -26,6 +28,11 @@ $pdo->exec("
 
 $items = $pdo->query("SELECT id, name, created_at FROM items ORDER BY id")->fetchAll();
 
+$flash = $_SESSION['crud_flash'] ?? '';
+$error = $_SESSION['crud_error'] ?? '';
+$addName = $_SESSION['crud_name'] ?? '';
+unset($_SESSION['crud_flash'], $_SESSION['crud_error'], $_SESSION['crud_name']);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,11 +43,18 @@ $items = $pdo->query("SELECT id, name, created_at FROM items ORDER BY id")->fetc
 <body>
     <h1>Items (mini CRUD)</h1>
 
+    <?php if ($flash !== ''): ?>
+        <p style="color: green;"><?php echo htmlspecialchars($flash, ENT_QUOTES); ?></p>
+    <?php endif; ?>
+    <?php if ($error !== ''): ?>
+        <p style="color: red;"><?php echo htmlspecialchars($error, ENT_QUOTES); ?></p>
+    <?php endif; ?>
+
     <h2>Add item</h2>
     <form method="post" action="18-crud-add.php">
         <label>
             Name:
-            <input type="text" name="name" required>
+            <input type="text" name="name" value="<?php echo htmlspecialchars($addName, ENT_QUOTES); ?>" maxlength="255" required>
         </label>
         <button type="submit">Add</button>
     </form>
@@ -67,7 +81,7 @@ $items = $pdo->query("SELECT id, name, created_at FROM items ORDER BY id")->fetc
                         <td>
                             <a href="18-crud-edit.php?id=<?php echo (int) $row['id']; ?>">Edit</a>
                             |
-                            <a href="18-crud-delete.php?id=<?php echo (int) $row['id']; ?>">Delete</a>
+                            <a href="18-crud-delete-confirm.php?id=<?php echo (int) $row['id']; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

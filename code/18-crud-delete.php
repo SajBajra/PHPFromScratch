@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $config = require __DIR__ . '/db-config.php';
 
 try {
@@ -16,11 +18,12 @@ try {
     die('Connection failed: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES));
 }
 
-$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+$id = isset($_POST['id']) ? (int) $_POST['id'] : (isset($_GET['id']) ? (int) $_GET['id'] : 0);
 
 if ($id >= 1) {
     $stmt = $pdo->prepare("DELETE FROM items WHERE id = :id");
     $stmt->execute(['id' => $id]);
+    $_SESSION['crud_flash'] = 'Item deleted.';
 }
 
 header('Location: 18-crud-list.php');
