@@ -1,0 +1,3 @@
+Pagination
+
+I added pagination to the blog list (27-blog-list.php). We show 5 posts per page. The current page comes from ?page= (default 1), and we clamp it so it's at least 1 and at most the last page. We run SELECT COUNT(*) to get the total number of posts, then compute the number of pages (ceil(total / perPage)). We fetch only the current page with LIMIT and OFFSET; in PDO we use bindValue(..., PDO::PARAM_INT) for LIMIT/OFFSET so they are integers. At the bottom we show "Previous", "Page X of Y", and "Next" when there is more than one page.

@@ -27,7 +27,24 @@ $pdo->exec("
     )
 ");
 
-$posts = $pdo->query("SELECT id, title, created_at FROM posts ORDER BY created_at DESC")->fetchAll();
+$perPage = 5;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+if ($page < 1) {
+    $page = 1;
+}
+
+$total = (int) $pdo->query("SELECT COUNT(*) FROM posts")->fetchColumn();
+$totalPages = $total > 0 ? (int) ceil($total / $perPage) : 1;
+if ($page > $totalPages) {
+    $page = $totalPages;
+}
+
+$offset = ($page - 1) * $perPage;
+$stmt = $pdo->prepare("SELECT id, title, created_at FROM posts ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+$stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
+$posts = $stmt->fetchAll();
 
 $flash = $_SESSION['blog_flash'] ?? '';
 unset($_SESSION['blog_flash']);
@@ -54,6 +71,18 @@ unset($_SESSION['blog_flash']);
                 </li>
             <?php endforeach; ?>
         </ul>
+
+        <?php if ($totalPages > 1): ?>
+            <p>
+                <?php if ($page > 1): ?>
+                    <a href="27-blog-list.php?page=<?php echo $page - 1; ?>">Previous</a>
+                <?php endif; ?>
+                Page <?php echo $page; ?> of <?php echo $totalPages; ?>
+                <?php if ($page < $totalPages): ?>
+                    <a href="27-blog-list.php?page=<?php echo $page + 1; ?>">Next</a>
+                <?php endif; ?>
+            </p>
+        <?php endif; ?>
     <?php endif; ?>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

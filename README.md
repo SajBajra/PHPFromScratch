@@ -50,6 +50,7 @@ php -S localhost:8000 -t code
 - [x] Simple routing (front controller + home page)
 - [x] Shared layout (header & footer includes)
 - [x] Simple blog (list, view, add post)
+- [x] Pagination (blog list)
 
 ## Commit conventions
 
