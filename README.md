@@ -40,7 +40,7 @@ php -S localhost:8000 -t code
 - [x] Sessions and cookies
 - [x] Simple file I/O and guestbook
 - [x] PDO + MySQL
-- [ ] Mini CRUD project
+- [x] Mini CRUD project
 
 ## Commit conventions
 
