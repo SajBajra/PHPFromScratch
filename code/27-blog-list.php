@@ -58,7 +58,11 @@ unset($_SESSION['blog_flash']);
         <p style="color: green;"><?php echo htmlspecialchars($flash, ENT_QUOTES); ?></p>
     <?php endif; ?>
 
-    <p><a href="27-blog-add.php">Add post</a></p>
+    <?php if (!empty($_SESSION['auth_logged_in']) && $_SESSION['auth_logged_in'] === true): ?>
+        <p><a href="27-blog-add.php">Add post</a></p>
+    <?php else: ?>
+        <p><a href="26-login.php">Log in</a> to add a post.</p>
+    <?php endif; ?>
 
     <?php if (empty($posts)): ?>
         <p>No posts yet.</p>
