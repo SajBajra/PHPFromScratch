@@ -1,0 +1,3 @@
+Todo app (small project)
+
+I built a simple todo list using the same php_learn database. The todos table has id, title, done (0/1), and created_at. 22-todo-list.php shows all todos (undone first, then by id), a form to add a new one, and each row has a checkbox (toggle done) and a Delete link. Checking the box POSTs to 22-todo-toggle.php which flips the done flag and redirects back. Add form POSTs to 22-todo-add.php (with validation); delete goes to a confirm page then POSTs to 22-todo-delete.php. I reused the same patterns as the items CRUD: session flash messages, validation, confirm before delete, and PDO with prepared statements.

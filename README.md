@@ -44,6 +44,7 @@ php -S localhost:8000 -t code
 - [x] Security: password hashing demo
 - [x] Error handling (try/catch, custom error page)
 - [x] CSRF token demo
+- [x] Todo app (list, add, toggle done, delete)
 
 ## Commit conventions
 
