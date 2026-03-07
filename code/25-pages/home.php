@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>PHP From Scratch – Home</title>
-</head>
-<body>
+<?php $layoutTitle = 'PHP From Scratch – Home'; require __DIR__ . '/../includes/header.php'; ?>
     <h1>PHP From Scratch</h1>
     <p>Learning project: forms, sessions, DB, CRUD, and more.</p>
 
@@ -46,5 +40,4 @@
         <li><a href="21-csrf-demo.php">CSRF demo</a></li>
         <li><a href="24-api-demo.html">JSON API demo</a></li>
     </ul>
-</body>
-</html>
+<?php require __DIR__ . '/../includes/footer.php'; ?>

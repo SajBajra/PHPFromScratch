@@ -1,0 +1,3 @@
+Shared layout (header & footer)
+
+I added reusable header and footer includes. includes/header.php sets a default $layoutTitle if not already set, outputs the doctype, head (with title and a small style), and the start of body with a simple nav (Home, Items, Todos). includes/footer.php closes the page with a horizontal rule and a "Back to home" link. The home page (25-pages/home.php) now sets $layoutTitle and requires the header at the top, then outputs its content, then requires the footer. Any other page can do the same: set $layoutTitle (optional), require the header, output the main content, require the footer. This avoids repeating the same HTML and keeps a consistent look.
