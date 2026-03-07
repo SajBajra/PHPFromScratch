@@ -1,0 +1,3 @@
+Security: password hashing
+
+I added a small demo (19-password-hash-demo.php) that uses password_hash() and password_verify(). You should never store passwords in plain text. When a user registers or sets a password, call password_hash($password, PASSWORD_DEFAULT) and store the result in the database. When they log in, use password_verify($password, $storedHash) to check. The demo lets you type a password and shows the hash and that verify returns true for the same password. In a real app, the login script (e.g. 10-login-process.php) would compare the submitted password against a stored hash from the database instead of a hard-coded string.

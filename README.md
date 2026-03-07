@@ -41,6 +41,7 @@ php -S localhost:8000 -t code
 - [x] Simple file I/O and guestbook
 - [x] PDO + MySQL
 - [x] Mini CRUD project
+- [x] Security: password hashing demo
 
 ## Commit conventions
 
