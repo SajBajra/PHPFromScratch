@@ -8,6 +8,7 @@ This repository tracks my journey learning PHP from scratch. Each step is commit
 
 - PHP installed and available in the terminal (`php -v`).
 - Git installed and configured.
+- For PDO examples: MySQL (e.g. via Laragon) and a database named `php_learn` (create it in phpMyAdmin or MySQL CLI).
 
 ### How to run scripts
 
@@ -38,7 +39,7 @@ php -S localhost:8000 -t code
 - [x] Working with forms (GET/POST)
 - [x] Sessions and cookies
 - [x] Simple file I/O and guestbook
-- [ ] PDO + MySQL
+- [x] PDO + MySQL
 - [ ] Mini CRUD project
 
 ## Commit conventions

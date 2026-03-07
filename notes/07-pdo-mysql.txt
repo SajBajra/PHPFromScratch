@@ -1,0 +1,7 @@
+PDO + MySQL
+
+I started using PDO to talk to MySQL. I put connection settings in a small db-config.php (DSN, username, password) and use Laragon’s default: host localhost, user root, empty password, database php_learn. I had to create the database php_learn once (e.g. in Laragon’s phpMyAdmin or MySQL command line).
+
+In 16-pdo-connect.php I create a PDO instance with the config, set ERRMODE_EXCEPTION and FETCH_ASSOC, and catch PDOException to show a friendly message if the connection fails.
+
+In 17-pdo-basics.php I use the same connection to run CREATE TABLE IF NOT EXISTS for a simple items table (id, name, created_at), then INSERT a row with a prepared statement (prepare/execute with :name) to avoid SQL injection, and finally SELECT all rows with query() and fetchAll() to show them in an HTML table. This covered the basics: connect, create table, insert with placeholders, and select.
