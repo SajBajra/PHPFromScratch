@@ -1,0 +1,3 @@
+Simple routing (front controller)
+
+I added a minimal front controller: 25-index.php reads ?page= from the query string, sanitizes it (only letters, numbers, underscore, hyphen), and allows only a fixed list of page names. It then includes the matching file from 25-pages/ (e.g. home.php). If the page is not allowed or the file does not exist, it includes 404.php and the 404 page sends a 404 status. The home page (25-pages/home.php) is a simple list of links to all the main demos. This pattern (one entry point, dispatch by parameter, include a view) is the basis of many PHP apps and frameworks.

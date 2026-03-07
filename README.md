@@ -47,6 +47,7 @@ php -S localhost:8000 -t code
 - [x] Todo app (list, add, toggle done, delete)
 - [x] File upload demo
 - [x] Simple JSON API (items endpoint)
+- [x] Simple routing (front controller + home page)
 
 ## Commit conventions
 
