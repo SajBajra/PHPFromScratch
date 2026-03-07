@@ -1,0 +1,3 @@
+File upload
+
+I added a file upload demo (23-file-upload.php). The form uses enctype="multipart/form-data" and an input type="file". On the server we read $_FILES['file'] and check 'error' (e.g. UPLOAD_ERR_OK), then validate size (e.g. max 2 MB) and extension (only jpg, png, gif, pdf). We save the file with move_uploaded_file() to an uploads/ folder, using a random name (bin2hex(random_bytes(8)) + extension) to avoid overwrites and path tricks. 23-file-download.php serves a file from uploads/ by name: we validate the requested name (no path traversal), resolve realpath, and send the file with the right Content-Type. The uploads/ folder is in .gitignore so uploaded files are not committed.
