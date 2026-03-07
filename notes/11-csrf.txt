@@ -1,0 +1,3 @@
+CSRF (cross-site request forgery) protection
+
+I added a demo (21-csrf-demo.php) that uses a CSRF token. When the page is loaded we ensure the session has a random token (bin2hex(random_bytes(32))). We put it in a hidden field in the form. When the form is submitted we compare the submitted value to the session token with hash_equals() (to avoid timing leaks). If they don't match we reject the request. If they match we accept the form and can optionally regenerate the token. This way another site cannot submit a valid form in the user's name because it doesn't know the token. For any form that changes data (login, add, edit, delete) you should use this pattern.

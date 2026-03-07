@@ -43,6 +43,7 @@ php -S localhost:8000 -t code
 - [x] Mini CRUD project
 - [x] Security: password hashing demo
 - [x] Error handling (try/catch, custom error page)
+- [x] CSRF token demo
 
 ## Commit conventions
 
