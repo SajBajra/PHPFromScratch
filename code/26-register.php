@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hash = password_hash($password, PASSWORD_DEFAULT);
             $insert = $pdo->prepare("INSERT INTO users (email, password_hash) VALUES (:email, :hash)");
             $insert->execute(['email' => $email, 'hash' => $hash]);
-            $_SESSION['login_error'] = 'Account created. You can log in now.';
+            $_SESSION['login_message'] = 'Account created. You can log in now.';
             header('Location: 26-login.php');
             exit;
         }
