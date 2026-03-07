@@ -2,6 +2,11 @@
 
 session_start();
 
+if (empty($_SESSION['auth_logged_in']) || $_SESSION['auth_logged_in'] !== true) {
+    header('Location: 26-login.php');
+    exit;
+}
+
 $config = require __DIR__ . '/db-config.php';
 
 try {
