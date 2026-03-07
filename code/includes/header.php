@@ -1,5 +1,9 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $layoutTitle = $layoutTitle ?? 'PHP From Scratch';
+$authLoggedIn = !empty($_SESSION['auth_logged_in']) && $_SESSION['auth_logged_in'] === true;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,4 +23,11 @@ $layoutTitle = $layoutTitle ?? 'PHP From Scratch';
         <a href="18-crud-list.php">Items</a>
         <a href="22-todo-list.php">Todos</a>
         <a href="27-blog-list.php">Blog</a>
+        <?php if ($authLoggedIn): ?>
+            <a href="26-dashboard.php">Dashboard</a>
+            <a href="26-logout.php">Log out</a>
+        <?php else: ?>
+            <a href="26-register.php">Register</a>
+            <a href="26-login.php">Log in</a>
+        <?php endif; ?>
     </nav>
