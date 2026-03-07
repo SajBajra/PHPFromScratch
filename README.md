@@ -46,6 +46,7 @@ php -S localhost:8000 -t code
 - [x] CSRF token demo
 - [x] Todo app (list, add, toggle done, delete)
 - [x] File upload demo
+- [x] Simple JSON API (items endpoint)
 
 ## Commit conventions
 

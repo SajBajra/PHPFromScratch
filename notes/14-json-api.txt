@@ -1,0 +1,3 @@
+JSON API
+
+I added a minimal API that returns JSON. 24-api-items.php sets the header Content-Type: application/json, connects to the database, runs a SELECT on the items table, and outputs json_encode(['items' => $items]). If the connection fails it sends a 500 response and a JSON object with an error key. 24-api-demo.html uses the Fetch API to call that script and display the result. This shows how a PHP script can act as an API endpoint for AJAX, mobile apps, or other frontends.

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API demo – fetch items</title>
+</head>
+<body>
+    <h1>API demo</h1>
+    <p>This page fetches the items list from <code>24-api-items.php</code> and displays it.</p>
+    <button type="button" id="load">Load items</button>
+    <pre id="out"></pre>
+
+    <script>
+        document.getElementById('load').onclick = function () {
+            var out = document.getElementById('out');
+            out.textContent = 'Loading…';
+            fetch('24-api-items.php')
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    out.textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(function (err) {
+                    out.textContent = 'Error: ' + err.message;
+                });
+        };
+    </script>
+</body>
+</html>
