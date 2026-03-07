@@ -1,0 +1,5 @@
+Error handling
+
+I added a small demo (20-error-handling-demo.php) that uses try/catch to handle exceptions. One link throws a RuntimeException and we catch it and show a friendly message. Another link tries to connect to a non-existent database so PDO throws PDOException; we catch it and display the message instead of a stack trace. In real apps you use try/catch around risky code (DB, file I/O, external APIs) and log errors or show a generic message to users while keeping details for logs.
+
+I also added a simple custom error page (20-error-page.php) that accepts ?code=404 or ?code=500 and sends the right HTTP status and a short message. In production you'd point your server (e.g. ErrorDocument in Apache) to such a page so users never see raw PHP errors.

@@ -42,6 +42,7 @@ php -S localhost:8000 -t code
 - [x] PDO + MySQL
 - [x] Mini CRUD project
 - [x] Security: password hashing demo
+- [x] Error handling (try/catch, custom error page)
 
 ## Commit conventions
 
