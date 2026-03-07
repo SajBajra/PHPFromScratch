@@ -18,4 +18,5 @@ $layoutTitle = $layoutTitle ?? 'PHP From Scratch';
         <a href="25-index.php">Home</a>
         <a href="18-crud-list.php">Items</a>
         <a href="22-todo-list.php">Todos</a>
+        <a href="27-blog-list.php">Blog</a>
     </nav>

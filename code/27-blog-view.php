@@ -1,0 +1,43 @@
+<?php
+
+$config = require __DIR__ . '/db-config.php';
+
+try {
+    $pdo = new PDO(
+        $config['dsn'],
+        $config['username'],
+        $config['password'],
+        [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]
+    );
+} catch (PDOException $e) {
+    die('Connection failed: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES));
+}
+
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+if ($id < 1) {
+    header('Location: 27-blog-list.php');
+    exit;
+}
+
+$stmt = $pdo->prepare("SELECT id, title, body, created_at FROM posts WHERE id = :id");
+$stmt->execute(['id' => $id]);
+$post = $stmt->fetch();
+
+if (!$post) {
+    header('Location: 27-blog-list.php');
+    exit;
+}
+
+$layoutTitle = htmlspecialchars($post['title'], ENT_QUOTES) . ' – Blog';
+require __DIR__ . '/includes/header.php';
+
+?>
+    <h1><?php echo htmlspecialchars($post['title'], ENT_QUOTES); ?></h1>
+    <p><small><?php echo htmlspecialchars($post['created_at'], ENT_QUOTES); ?></small></p>
+    <div><?php echo nl2br(htmlspecialchars($post['body'], ENT_QUOTES)); ?></div>
+    <p><a href="27-blog-list.php">Back to list</a></p>
+<?php require __DIR__ . '/includes/footer.php'; ?>

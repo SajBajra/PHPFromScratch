@@ -1,0 +1,69 @@
+<?php
+
+session_start();
+
+$config = require __DIR__ . '/db-config.php';
+
+try {
+    $pdo = new PDO(
+        $config['dsn'],
+        $config['username'],
+        $config['password'],
+        [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]
+    );
+} catch (PDOException $e) {
+    die('Connection failed: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES));
+}
+
+$title = '';
+$body = '';
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = trim($_POST['title'] ?? '');
+    $body = trim($_POST['body'] ?? '');
+
+    if ($title === '') {
+        $error = 'Title is required.';
+    } elseif (strlen($title) > 255) {
+        $error = 'Title must be at most 255 characters.';
+    } elseif ($body === '') {
+        $error = 'Body is required.';
+    } else {
+        $stmt = $pdo->prepare("INSERT INTO posts (title, body) VALUES (:title, :body)");
+        $stmt->execute(['title' => $title, 'body' => $body]);
+        $_SESSION['blog_flash'] = 'Post added.';
+        header('Location: 27-blog-list.php');
+        exit;
+    }
+}
+
+$layoutTitle = 'Add post – Blog';
+require __DIR__ . '/includes/header.php';
+
+?>
+    <h1>Add post</h1>
+
+    <?php if ($error !== ''): ?>
+        <p style="color: red;"><?php echo htmlspecialchars($error, ENT_QUOTES); ?></p>
+    <?php endif; ?>
+
+    <form method="post" action="">
+        <div>
+            <label>Title:<br>
+                <input type="text" name="title" value="<?php echo htmlspecialchars($title, ENT_QUOTES); ?>" maxlength="255" required>
+            </label>
+        </div>
+        <div>
+            <label>Body:<br>
+                <textarea name="body" rows="8" cols="60"><?php echo htmlspecialchars($body, ENT_QUOTES); ?></textarea>
+            </label>
+        </div>
+        <button type="submit">Publish</button>
+    </form>
+
+    <p><a href="27-blog-list.php">Back to list</a></p>
+<?php require __DIR__ . '/includes/footer.php'; ?>
