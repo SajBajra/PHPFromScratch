@@ -1,0 +1,3 @@
+Composer and autoload
+
+I added composer.json at the project root with a classmap autoload for the code/ folder. That way Composer scans code/ and autoloads any class (like Database) when you require vendor/autoload.php. After running "composer install" from the project root, vendor/autoload.php is created. The pdo basics and crud list pages now try to load that file first; if it exists they use the autoloader so we don't have to manually require Database.php. If vendor doesn't exist (e.g. composer not run yet) they fall back to requiring Database.php directly. This keeps the project working either way and introduces the Composer autoload pattern.
