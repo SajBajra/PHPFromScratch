@@ -56,6 +56,7 @@ php -S localhost:8000 -t code
 - [x] Header auth links and protected blog add post
 - [x] Basic OOP: Database helper class
 - [x] Composer and autoload (classmap for code/)
+- [x] Auth helper (require-auth include)
 
 ## Commit conventions
 
