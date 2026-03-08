@@ -1,11 +1,6 @@
 <?php
 
-session_start();
-
-if (empty($_SESSION['auth_logged_in']) || $_SESSION['auth_logged_in'] !== true) {
-    header('Location: 26-login.php');
-    exit;
-}
+require __DIR__ . '/includes/require-auth.php';
 
 $email = $_SESSION['auth_email'] ?? '';
 
