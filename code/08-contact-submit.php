@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__ . '/helpers.php';
+
 $name = $_POST['name'] ?? '';
 $email = $_POST['email'] ?? '';
 $message = $_POST['message'] ?? '';
@@ -15,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
     if (trim($email) === '') {
         $errors[] = 'Email is required.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } elseif (!validate_email($email)) {
         $errors[] = 'Email is not valid.';
     }
 
