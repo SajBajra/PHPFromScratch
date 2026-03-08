@@ -3,5 +3,8 @@
     "description": "Learning PHP from scratch",
     "autoload": {
         "classmap": ["code/"]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
     }
 }
