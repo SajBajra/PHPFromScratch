@@ -2,6 +2,8 @@
 
 session_start();
 
+require __DIR__ . '/helpers.php';
+
 $config = require __DIR__ . '/db-config.php';
 
 try {
@@ -37,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($email === '') {
         $error = 'Email is required.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } elseif (!validate_email($email)) {
         $error = 'Email is not valid.';
     } elseif ($password === '') {
         $error = 'Password is required.';
