@@ -4,18 +4,16 @@ session_start();
 
 require __DIR__ . '/helpers.php';
 
+if (is_file(__DIR__ . '/../vendor/autoload.php')) {
+    require __DIR__ . '/../vendor/autoload.php';
+} else {
+    require __DIR__ . '/Database.php';
+}
 $config = require __DIR__ . '/db-config.php';
 
 try {
-    $pdo = new PDO(
-        $config['dsn'],
-        $config['username'],
-        $config['password'],
-        [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        ]
-    );
+    $db = new Database($config);
+    $pdo = $db->getPdo();
 } catch (PDOException $e) {
     die('Connection failed: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES));
 }
