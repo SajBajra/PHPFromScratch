@@ -9,6 +9,7 @@ This repository tracks my journey learning PHP from scratch. Each step is commit
 - PHP installed and available in the terminal (`php -v`).
 - Git installed and configured.
 - For PDO examples: MySQL (e.g. via Laragon) and a database named `php_learn` (create it in phpMyAdmin or MySQL CLI).
+- Optional: [Composer](https://getcomposer.org/) – run `composer install` from the project root to enable autoloading for the Database class (scripts still work without it).
 
 ### How to run scripts
 
@@ -54,6 +55,7 @@ php -S localhost:8000 -t code
 - [x] Auth with database (register, login, logout)
 - [x] Header auth links and protected blog add post
 - [x] Basic OOP: Database helper class
+- [x] Composer and autoload (classmap for code/)
 
 ## Commit conventions
 
