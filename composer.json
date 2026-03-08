@@ -1,0 +1,7 @@
+{
+    "name": "saj/php-from-scratch",
+    "description": "Learning PHP from scratch",
+    "autoload": {
+        "classmap": ["code/"]
+    }
+}
