@@ -2,7 +2,11 @@
 
 session_start();
 
-require __DIR__ . '/Database.php';
+if (is_file(__DIR__ . '/../vendor/autoload.php')) {
+    require __DIR__ . '/../vendor/autoload.php';
+} else {
+    require __DIR__ . '/Database.php';
+}
 $config = require __DIR__ . '/db-config.php';
 
 try {
