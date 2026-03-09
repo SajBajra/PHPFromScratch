@@ -2,6 +2,10 @@
 
 require __DIR__ . '/helpers.php';
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $name = $_POST['name'] ?? '';
 $email = $_POST['email'] ?? '';
 $message = $_POST['message'] ?? '';
@@ -11,18 +15,22 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $errors[] = 'Please submit the form from the contact page.';
 } else {
-    if (trim($name) === '') {
-        $errors[] = 'Name is required.';
-    }
+    if (!csrf_verify()) {
+        $errors[] = 'Invalid security token. Please resubmit the form.';
+    } else {
+        if (trim($name) === '') {
+            $errors[] = 'Name is required.';
+        }
 
-    if (trim($email) === '') {
-        $errors[] = 'Email is required.';
-    } elseif (!validate_email($email)) {
-        $errors[] = 'Email is not valid.';
-    }
+        if (trim($email) === '') {
+            $errors[] = 'Email is required.';
+        } elseif (!validate_email($email)) {
+            $errors[] = 'Email is not valid.';
+        }
 
-    if (trim($message) === '') {
-        $errors[] = 'Message is required.';
+        if (trim($message) === '') {
+            $errors[] = 'Message is required.';
+        }
     }
 }
 
