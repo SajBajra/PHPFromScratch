@@ -1,3 +1,4 @@
+<?php require __DIR__ . '/helpers.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,7 @@
     <h1>Contact form</h1>
 
     <form method="post" action="08-contact-submit.php">
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(csrf_token(), ENT_QUOTES); ?>">
         <div>
             <label>
                 Name (required):
