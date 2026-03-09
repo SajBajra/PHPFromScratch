@@ -59,6 +59,8 @@ php -S localhost:8000 -t code
 - [x] Composer and autoload (classmap for code/)
 - [x] Auth helper (require-auth include)
 - [x] Testing (PHPUnit + validate_email helper)
+- [x] CSRF on blog forms (helpers + add, edit, delete)
+- [x] Blog post authorship (user_id, edit/delete only for author)
 
 ## Commit conventions
 
