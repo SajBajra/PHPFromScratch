@@ -50,7 +50,7 @@ php -S localhost:8000 -t code
 - [x] Simple JSON API (items endpoint)
 - [x] Simple routing (front controller + home page)
 - [x] Shared layout (header & footer includes)
-- [x] Simple blog (list, view, add post)
+- [x] Simple blog (list, view, add, edit, delete post)
 - [x] Pagination (blog list)
 - [x] Auth with database (register, login, logout)
 - [x] Header auth links and protected blog add post
