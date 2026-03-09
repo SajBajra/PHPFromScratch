@@ -1,0 +1,5 @@
+CSRF on blog and post authorship
+
+I added two helpers in helpers.php: csrf_token() (ensures session and a token, returns it for hidden inputs) and csrf_verify() (returns true if POST contains a valid token). The blog add, edit, delete-confirm, and delete forms now use these: each form includes a hidden csrf_token field, and each handler checks csrf_verify() before changing data. This protects the blog from cross-site request forgery.
+
+I also added a user_id column to the posts table (ALTER TABLE, run once; existing posts have user_id NULL). When a logged-in user adds a post we store their auth_user_id. Edit and delete are restricted to the post author: only the user who created the post (or any logged-in user for legacy posts with user_id NULL) can see Edit/Delete links and use the edit or delete actions. The list and view pages show Edit/Delete only when the current user is the author (or the post has no author). The edit, delete-confirm, and delete scripts redirect to the list if the user is not allowed.
