@@ -1,0 +1,4 @@
+Blog comments
+
+I added comments to the blog post view (27-blog-view.php). Under each post we create a comments table if needed and load all comments for that post (with the comment text, created_at, and the user email when available via a LEFT JOIN on users). Logged-in users see an “Add a comment” form; the form is protected with the shared csrf_token()/csrf_verify() helpers and posts back to the same page. On POST we validate that the user is logged in, check the CSRF token, require a non-empty comment, insert a row into comments with post_id, user_id (when logged in), and body, set a flash message, and redirect back to the GET view so the new comment appears in the list.
+
