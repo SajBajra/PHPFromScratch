@@ -37,5 +37,11 @@ require __DIR__ . '/includes/header.php';
     <h1><?php echo htmlspecialchars($post['title'], ENT_QUOTES); ?></h1>
     <p><small><?php echo htmlspecialchars($post['created_at'], ENT_QUOTES); ?></small></p>
     <div><?php echo nl2br(htmlspecialchars($post['body'], ENT_QUOTES)); ?></div>
-    <p><a href="27-blog-list.php">Back to list</a></p>
+    <p>
+        <a href="27-blog-list.php">Back to list</a>
+        <?php if (!empty($_SESSION['auth_logged_in']) && $_SESSION['auth_logged_in'] === true): ?>
+            · <a href="27-blog-edit.php?id=<?php echo (int) $post['id']; ?>">Edit</a>
+            · <a href="27-blog-delete-confirm.php?id=<?php echo (int) $post['id']; ?>">Delete</a>
+        <?php endif; ?>
+    </p>
 <?php require __DIR__ . '/includes/footer.php'; ?>
