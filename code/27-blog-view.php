@@ -21,7 +21,7 @@ if ($id < 1) {
     exit;
 }
 
-$stmt = $pdo->prepare("SELECT id, title, body, created_at FROM posts WHERE id = :id");
+$stmt = $pdo->prepare("SELECT id, title, body, created_at, user_id FROM posts WHERE id = :id");
 $stmt->execute(['id' => $id]);
 $post = $stmt->fetch();
 
@@ -39,7 +39,10 @@ require __DIR__ . '/includes/header.php';
     <div><?php echo nl2br(htmlspecialchars($post['body'], ENT_QUOTES)); ?></div>
     <p>
         <a href="27-blog-list.php">Back to list</a>
-        <?php if (!empty($_SESSION['auth_logged_in']) && $_SESSION['auth_logged_in'] === true): ?>
+        <?php
+        $canEdit = !empty($_SESSION['auth_logged_in']) && $_SESSION['auth_logged_in'] === true
+            && (empty($post['user_id']) || (int) $post['user_id'] === (int) ($_SESSION['auth_user_id'] ?? 0));
+        if ($canEdit): ?>
             · <a href="27-blog-edit.php?id=<?php echo (int) $post['id']; ?>">Edit</a>
             · <a href="27-blog-delete-confirm.php?id=<?php echo (int) $post['id']; ?>">Delete</a>
         <?php endif; ?>
