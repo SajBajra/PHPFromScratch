@@ -70,6 +70,9 @@ unset($_SESSION['blog_flash']);
                 <li>
                     <a href="27-blog-view.php?id=<?php echo (int) $post['id']; ?>"><?php echo htmlspecialchars($post['title'], ENT_QUOTES); ?></a>
                     <small><?php echo htmlspecialchars($post['created_at'], ENT_QUOTES); ?></small>
+                    <?php if (!empty($_SESSION['auth_logged_in']) && $_SESSION['auth_logged_in'] === true): ?>
+                        <small> · <a href="27-blog-edit.php?id=<?php echo (int) $post['id']; ?>">Edit</a> · <a href="27-blog-delete-confirm.php?id=<?php echo (int) $post['id']; ?>">Delete</a></small>
+                    <?php endif; ?>
                 </li>
             <?php endforeach; ?>
         </ul>
