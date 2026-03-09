@@ -24,6 +24,11 @@ $pdo->exec("
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
 ");
+try {
+    $pdo->exec("ALTER TABLE posts ADD COLUMN user_id INT NULL");
+} catch (PDOException $e) {
+    // Column may already exist
+}
 
 $perPage = 5;
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
@@ -38,7 +43,7 @@ if ($page > $totalPages) {
 }
 
 $offset = ($page - 1) * $perPage;
-$stmt = $pdo->prepare("SELECT id, title, created_at FROM posts ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+$stmt = $pdo->prepare("SELECT id, title, created_at, user_id FROM posts ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
 $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
@@ -70,7 +75,10 @@ unset($_SESSION['blog_flash']);
                 <li>
                     <a href="27-blog-view.php?id=<?php echo (int) $post['id']; ?>"><?php echo htmlspecialchars($post['title'], ENT_QUOTES); ?></a>
                     <small><?php echo htmlspecialchars($post['created_at'], ENT_QUOTES); ?></small>
-                    <?php if (!empty($_SESSION['auth_logged_in']) && $_SESSION['auth_logged_in'] === true): ?>
+                    <?php
+                    $canEdit = !empty($_SESSION['auth_logged_in']) && $_SESSION['auth_logged_in'] === true
+                        && (empty($post['user_id']) || (int) $post['user_id'] === (int) ($_SESSION['auth_user_id'] ?? 0));
+                    if ($canEdit): ?>
                         <small> · <a href="27-blog-edit.php?id=<?php echo (int) $post['id']; ?>">Edit</a> · <a href="27-blog-delete-confirm.php?id=<?php echo (int) $post['id']; ?>">Delete</a></small>
                     <?php endif; ?>
                 </li>
