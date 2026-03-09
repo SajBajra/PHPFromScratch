@@ -61,6 +61,7 @@ php -S localhost:8000 -t code
 - [x] Testing (PHPUnit + validate_email helper)
 - [x] CSRF on blog forms (helpers + add, edit, delete)
 - [x] Blog post authorship (user_id, edit/delete only for author)
+- [x] Blog comments (list and add for logged-in users)
 
 ## Commit conventions
 
