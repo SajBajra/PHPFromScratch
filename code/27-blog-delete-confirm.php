@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/includes/require-auth.php';
+require_once __DIR__ . '/helpers.php';
 
 if (is_file(__DIR__ . '/../vendor/autoload.php')) {
     require __DIR__ . '/../vendor/autoload.php';
@@ -23,11 +24,17 @@ if ($id < 1) {
     exit;
 }
 
-$stmt = $pdo->prepare("SELECT id, title FROM posts WHERE id = :id");
+$stmt = $pdo->prepare("SELECT id, title, user_id FROM posts WHERE id = :id");
 $stmt->execute(['id' => $id]);
 $post = $stmt->fetch();
 
 if (!$post) {
+    header('Location: 27-blog-list.php');
+    exit;
+}
+
+$authUserId = (int) ($_SESSION['auth_user_id'] ?? 0);
+if (!empty($post['user_id']) && (int) $post['user_id'] !== $authUserId) {
     header('Location: 27-blog-list.php');
     exit;
 }
@@ -39,6 +46,7 @@ require __DIR__ . '/includes/header.php';
     <h1>Confirm delete</h1>
     <p>Are you sure you want to delete <strong><?php echo htmlspecialchars($post['title'], ENT_QUOTES); ?></strong>?</p>
     <form method="post" action="27-blog-delete.php">
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(csrf_token(), ENT_QUOTES); ?>">
         <input type="hidden" name="id" value="<?php echo (int) $post['id']; ?>">
         <button type="submit">Delete</button>
     </form>

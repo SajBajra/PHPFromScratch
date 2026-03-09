@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/includes/require-auth.php';
+require_once __DIR__ . '/helpers.php';
 
 if (is_file(__DIR__ . '/../vendor/autoload.php')) {
     require __DIR__ . '/../vendor/autoload.php';
@@ -23,11 +24,17 @@ if ($id < 1) {
     exit;
 }
 
-$stmt = $pdo->prepare("SELECT id, title, body FROM posts WHERE id = :id");
+$stmt = $pdo->prepare("SELECT id, title, body, user_id FROM posts WHERE id = :id");
 $stmt->execute(['id' => $id]);
 $post = $stmt->fetch();
 
 if (!$post) {
+    header('Location: 27-blog-list.php');
+    exit;
+}
+
+$authUserId = (int) ($_SESSION['auth_user_id'] ?? 0);
+if (!empty($post['user_id']) && (int) $post['user_id'] !== $authUserId) {
     header('Location: 27-blog-list.php');
     exit;
 }
@@ -37,21 +44,25 @@ $body = $post['body'];
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = trim($_POST['title'] ?? '');
-    $body = trim($_POST['body'] ?? '');
-
-    if ($title === '') {
-        $error = 'Title is required.';
-    } elseif (strlen($title) > 255) {
-        $error = 'Title must be at most 255 characters.';
-    } elseif ($body === '') {
-        $error = 'Body is required.';
+    if (!csrf_verify()) {
+        $error = 'Invalid security token. Please try again.';
     } else {
-        $stmt = $pdo->prepare("UPDATE posts SET title = :title, body = :body WHERE id = :id");
-        $stmt->execute(['title' => $title, 'body' => $body, 'id' => $id]);
-        $_SESSION['blog_flash'] = 'Post updated.';
-        header('Location: 27-blog-view.php?id=' . $id);
-        exit;
+        $title = trim($_POST['title'] ?? '');
+        $body = trim($_POST['body'] ?? '');
+
+        if ($title === '') {
+            $error = 'Title is required.';
+        } elseif (strlen($title) > 255) {
+            $error = 'Title must be at most 255 characters.';
+        } elseif ($body === '') {
+            $error = 'Body is required.';
+        } else {
+            $stmt = $pdo->prepare("UPDATE posts SET title = :title, body = :body WHERE id = :id");
+            $stmt->execute(['title' => $title, 'body' => $body, 'id' => $id]);
+            $_SESSION['blog_flash'] = 'Post updated.';
+            header('Location: 27-blog-view.php?id=' . $id);
+            exit;
+        }
     }
 }
 
@@ -66,6 +77,7 @@ require __DIR__ . '/includes/header.php';
     <?php endif; ?>
 
     <form method="post" action="">
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(csrf_token(), ENT_QUOTES); ?>">
         <input type="hidden" name="id" value="<?php echo (int) $id; ?>">
         <div>
             <label>Title:<br>
