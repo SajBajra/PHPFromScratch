@@ -55,6 +55,7 @@ php -S localhost:8000 -t code
 - [x] Auth with database (register, login, logout)
 - [x] Header auth links and protected blog add post
 - [x] Basic OOP: Database helper class
+- [x] All DB scripts use Database class (CRUD, todo, blog, auth, API)
 - [x] Composer and autoload (classmap for code/)
 - [x] Auth helper (require-auth include)
 - [x] Testing (PHPUnit + validate_email helper)
