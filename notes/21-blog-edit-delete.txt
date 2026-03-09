@@ -1,0 +1,3 @@
+Blog edit and delete
+
+I added full CRUD for the blog. 27-blog-edit.php is protected (require-auth); it loads the post by id, shows a form with title and body, and on POST updates the row then redirects to the post view with a flash. 27-blog-delete-confirm.php shows a confirmation page with the post title and a form that POSTs to 27-blog-delete.php; the delete script removes the post and redirects to the list with a flash. Edit and Delete links appear on the blog view page and on each post in the list when the user is logged in (same as Add post).
