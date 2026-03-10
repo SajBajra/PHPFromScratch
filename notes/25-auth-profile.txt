@@ -1,0 +1,4 @@
+Auth profile and password change
+
+I added a simple profile page (26-profile.php) that is protected with require-auth. It shows the logged-in user's email from the session and has a "Change password" form. The form posts back to the same page, uses the shared csrf_token()/csrf_verify() helpers, and asks for the current password, new password, and confirmation. On submit it validates that all fields are filled in, the new password matches the confirmation, and is at least 8 characters. It then loads the current password_hash from the users table for the logged-in user, checks the current password with password_verify(), and if correct, hashes the new password with password_hash() and updates the row. Success and error messages are shown on the page. The header (includes/header.php) now shows a Profile link (26-profile.php) alongside Dashboard and Log out when logged in.
+
