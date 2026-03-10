@@ -29,6 +29,18 @@ $error = $_SESSION['login_error'] ?? '';
 unset($_SESSION['login_message'], $_SESSION['login_error']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $maxAttempts = 5;
+    $lockSeconds = 60;
+    $failCount = (int) ($_SESSION['login_fail_count'] ?? 0);
+    $lastFail  = (int) ($_SESSION['login_last_fail_time'] ?? 0);
+    $now = time();
+
+    if ($failCount >= $maxAttempts && ($now - $lastFail) < $lockSeconds) {
+        $_SESSION['login_error'] = 'Too many failed login attempts. Please wait a moment and try again.';
+        header('Location: 26-login.php');
+        exit;
+    }
+
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -43,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password_hash'])) {
+        // Reset failure counter on successful login.
+        unset($_SESSION['login_fail_count'], $_SESSION['login_last_fail_time']);
         $_SESSION['auth_logged_in'] = true;
         $_SESSION['auth_user_id'] = (int) $user['id'];
         $_SESSION['auth_email'] = $user['email'];
@@ -52,6 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    $_SESSION['login_fail_count'] = $failCount + 1;
+    $_SESSION['login_last_fail_time'] = $now;
     $_SESSION['login_error'] = 'Invalid email or password.';
     header('Location: 26-login.php');
     exit;
