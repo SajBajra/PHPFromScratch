@@ -62,6 +62,9 @@ php -S localhost:8000 -t code
 - [x] CSRF on blog forms (helpers + add, edit, delete)
 - [x] Blog post authorship (user_id, edit/delete only for author)
 - [x] Blog comments (list and add for logged-in users)
+- [x] User profile page (password change, CSRF)
+- [x] Redirect after login (back to originally requested page)
+- [x] Login rate limiting (session-based throttle)
 
 ## Commit conventions
 
