@@ -16,9 +16,11 @@ try {
     die('Connection failed: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES));
 }
 
-// If already logged in, redirect to dashboard
+// If already logged in, redirect to dashboard (or original page if remembered).
 if (!empty($_SESSION['auth_logged_in']) && $_SESSION['auth_logged_in'] === true) {
-    header('Location: 26-dashboard.php');
+    $target = $_SESSION['auth_redirect_to'] ?? '26-dashboard.php';
+    unset($_SESSION['auth_redirect_to']);
+    header('Location: ' . $target);
     exit;
 }
 
@@ -44,7 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['auth_logged_in'] = true;
         $_SESSION['auth_user_id'] = (int) $user['id'];
         $_SESSION['auth_email'] = $user['email'];
-        header('Location: 26-dashboard.php');
+        $target = $_SESSION['auth_redirect_to'] ?? '26-dashboard.php';
+        unset($_SESSION['auth_redirect_to']);
+        header('Location: ' . $target);
         exit;
     }
 
