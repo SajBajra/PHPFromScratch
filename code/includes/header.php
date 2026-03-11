@@ -24,6 +24,7 @@ $authLoggedIn = !empty($_SESSION['auth_logged_in']) && $_SESSION['auth_logged_in
         <a href="22-todo-list.php">Todos</a>
         <a href="27-blog-list.php">Blog</a>
         <?php if ($authLoggedIn): ?>
+            <a href="28-notes-list.php">Notes</a>
             <a href="26-dashboard.php">Dashboard</a>
             <a href="26-profile.php">Profile</a>
             <a href="26-logout.php">Log out</a>
