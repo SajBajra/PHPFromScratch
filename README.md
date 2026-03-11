@@ -65,6 +65,7 @@ php -S localhost:8000 -t code
 - [x] User profile page (password change, CSRF)
 - [x] Redirect after login (back to originally requested page)
 - [x] Login rate limiting (session-based throttle)
+- [x] Notes app (per-user notes list, view, add, edit, delete)
 
 ## Commit conventions
 
