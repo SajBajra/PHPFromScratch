@@ -1,0 +1,4 @@
+Image gallery using uploads/
+
+I added a simple image gallery that reuses the uploads/ folder from the file upload demo (23-file-upload.php). 29-gallery.php scans the uploads directory, filters for image extensions (jpg, jpeg, png, gif, webp), and shows each image as a small thumbnail with the filename underneath in a simple grid layout. It uses the shared layout header so there is a Gallery link in the nav; anyone can view the gallery, but only logged-in users see a Delete button under each image. The delete button posts (with a CSRF token from csrf_token()/csrf_verify()) to 29-gallery-delete.php, which is protected by require-auth. The delete handler validates the filename to avoid directory traversal, checks that the file exists inside uploads/, unlinks it, and sets a flash message in the session so 29-gallery.php can show whether the image was deleted successfully.
+
